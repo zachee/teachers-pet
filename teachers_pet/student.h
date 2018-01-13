@@ -4,31 +4,26 @@
 #include <string>
 
 class Student{
-public:
-    Student(string first_name, string last_name);
-    Student(string first_name, string last_name,
-                string email);
-    Student(string first_name, string last_name,
-                float grade);
-    Student(string first_name, string last_name,
-                string email, float grade);
-    virtual ~Student();
+    public:
+        Student(std::string first_name, std::string last_name,
+                    std::string email, float grade);
+        ~Student();
 
-    string getFirstName() const;
-    string getLastName() const;
-    string getEmail() const;
-    float getGrade() const;
+        std::string getFirstName() const;
+        std::string getLastName() const;
+        std::string getEmail() const;
+        float getGrade() const;
 
-    void setFirstName(string first_name);
-    void setLastName(string last_name);
-    void setEmail(string email);
-    void setGrade(float grade);
+        void setFirstName(std::string first_name);
+        void setLastName(std::string last_name);
+        void setEmail(std::string email);
+        void setGrade(float grade);
 
-private:
-    string m_first_name;
-    string m_last_name;
-    string m_email;
-    float m_grade;
+    private:
+        std::string m_first_name;
+        std::string m_last_name;
+        std::string m_email;
+        float m_grade;
 };
 
 #endif

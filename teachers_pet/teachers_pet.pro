@@ -4,21 +4,36 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+qtHaveModule(printsupport): QT += printsupport
+
+#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = teachers_pet
 TEMPLATE = app
 
+HEADERS  += \
+    student.h \
+    course.h \
+    spreadsheet.h \
+    spreadsheetdelegate.h \
+    spreadsheetitem.h \
+    printview.h
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     student.cpp \
-    course.cpp
+    course.cpp \
+    printview.cpp \
+    spreadsheet.cpp \
+    spreadsheetdelegate.cpp \
+    spreadsheetitem.cpp
 
-HEADERS  += mainwindow.h \
-    student.h \
-    course.h
+FORMS    +=
 
-FORMS    += mainwindow.ui
+SUBDIRS +=
+
+RESOURCES += spreadsheet.qrc
+
+DISTFILES += \
+    images/interview.png
