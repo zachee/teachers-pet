@@ -63,21 +63,47 @@
 SpreadSheet::SpreadSheet(int rows, QWidget *parent)
         : QMainWindow(parent)
 {
-    addToolBar(toolBar = new QToolBar());
+    addToolBar(hToolBar = new QToolBar());
+    hToolBar->setMovable(false);
+    addToolBar(Qt::LeftToolBarArea, vToolBar = new QToolBar());
+    vToolBar->setMovable(false);
+
     formulaInput = new QLineEdit();
 
-    cellLabel = new QLabel(toolBar);
+    cellLabel = new QLabel(hToolBar);
     cellLabel->setMinimumSize(80, 0);
 
-    toolBar->addWidget(cellLabel);
-    toolBar->addWidget(formulaInput);
+    //vToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    vToolBar->setIconSize(QSize(35, 35));
+
+    QPixmap add_student(":/images/add_student.png");
+    QPixmap remove_student(":/images/remove_student.png");
+    QPixmap add_course(":/images/add_course.png");
+    QPixmap remove_course(":/images/remove_course.png");
+
+    vToolBar->addAction(QIcon(add_student), "Add Student");
+    vToolBar->addAction(QIcon(remove_student), "Remove Student");
+    vToolBar->addSeparator();
+    vToolBar->addAction(QIcon(add_course), "Add Course");
+    vToolBar->addAction(QIcon(remove_course), "Remove Course");
+
+    hToolBar->addWidget(cellLabel);
+    hToolBar->addWidget(formulaInput);
 
     table = new QTableWidget(rows, studentParams, this);
     table->setSizeAdjustPolicy(QTableWidget::AdjustToContents);
-    for (int c = 0; c < studentParams; ++c) {
+    /*for (int c = 0; c < studentParams; ++c) {
         QString character(QChar('A' + c));
         table->setHorizontalHeaderItem(c, new QTableWidgetItem(character));
-    }
+    }*/
+    QString col_title = "First Name";
+    table->setHorizontalHeaderItem(0, new QTableWidgetItem(col_title));
+    col_title = "Last Name";
+    table->setHorizontalHeaderItem(1, new QTableWidgetItem(col_title));
+    col_title = "Email";
+    table->setHorizontalHeaderItem(2, new QTableWidgetItem(col_title));
+    col_title = "Grade";
+    table->setHorizontalHeaderItem(3, new QTableWidgetItem(col_title));
 
     table->setItemPrototype(table->item(rows - 1, studentParams - 1));
     table->setItemDelegate(new SpreadSheetDelegate());
@@ -85,7 +111,7 @@ SpreadSheet::SpreadSheet(int rows, QWidget *parent)
     createActions();
     updateColor(0);
     setupMenuBar();
-    //setupContents();
+    setupContents();
     setupContextMenu();
     setCentralWidget(table);
 
@@ -102,12 +128,12 @@ SpreadSheet::SpreadSheet(int rows, QWidget *parent)
     connect(table, &QTableWidget::itemChanged,
             this, &SpreadSheet::updateLineEdit);
 
-    setWindowTitle(tr("Spreadsheet"));
+    setWindowTitle(tr("Teacher's Pet"));
 }
 
 void SpreadSheet::createActions()
 {
-    cell_sumAction = new QAction(tr("Sum"), this);
+    /*cell_sumAction = new QAction(tr("Sum"), this);
     connect(cell_sumAction, &QAction::triggered, this, &SpreadSheet::actionSum);
 
     cell_addAction = new QAction(tr("&Add"), this);
@@ -124,7 +150,7 @@ void SpreadSheet::createActions()
 
     cell_divAction = new QAction(tr("&Divide"), this);
     cell_divAction->setShortcut(Qt::CTRL | Qt::Key_division);
-    connect(cell_divAction, &QAction::triggered, this, &SpreadSheet::actionDivide);
+    connect(cell_divAction, &QAction::triggered, this, &SpreadSheet::actionDivide);*/
 
     fontAction = new QAction(tr("Font..."), this);
     fontAction->setShortcut(Qt::CTRL | Qt::Key_F);
@@ -160,12 +186,12 @@ void SpreadSheet::setupMenuBar()
     fileMenu->addAction(exitAction);
 
     QMenu *cellMenu = menuBar()->addMenu(tr("&Cell"));
-    cellMenu->addAction(cell_addAction);
+    /*cellMenu->addAction(cell_addAction);
     cellMenu->addAction(cell_subAction);
     cellMenu->addAction(cell_mulAction);
     cellMenu->addAction(cell_divAction);
     cellMenu->addAction(cell_sumAction);
-    cellMenu->addSeparator();
+    cellMenu->addSeparator();*/
     cellMenu->addAction(colorAction);
     cellMenu->addAction(fontAction);
 
@@ -382,7 +408,7 @@ bool SpreadSheet::runInputDialog(const QString &title,
     return false;
 }
 
-void SpreadSheet::actionSum()
+/*void SpreadSheet::actionSum()
 {
     int row_first = 0;
     int row_last = 0;
@@ -459,7 +485,7 @@ void SpreadSheet::actionMultiply()
 void SpreadSheet::actionDivide()
 {
     actionMath_helper(tr("Division"), "/");
-}
+}*/
 
 void SpreadSheet::clear()
 {
@@ -469,12 +495,12 @@ void SpreadSheet::clear()
 
 void SpreadSheet::setupContextMenu()
 {
-    addAction(cell_addAction);
+    /*addAction(cell_addAction);
     addAction(cell_subAction);
     addAction(cell_mulAction);
     addAction(cell_divAction);
     addAction(cell_sumAction);
-    addAction(firstSeparator);
+    addAction(firstSeparator);*/
     addAction(colorAction);
     addAction(fontAction);
     addAction(secondSeparator);
@@ -482,8 +508,13 @@ void SpreadSheet::setupContextMenu()
     setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
-/*void SpreadSheet::setupContents()
+void SpreadSheet::setupContents()
 {
+    table->setItem(0, 0, new SpreadSheetItem("Jane"));
+    table->setItem(0, 1, new SpreadSheetItem("Doe"));
+    table->setItem(0, 2, new SpreadSheetItem("JaneDoe@email.com"));
+    table->setItem(0, 3, new SpreadSheetItem("96.0"));
+    /*
     QColor titleBackground(Qt::lightGray);
     QFont titleFont = table->font();
     titleFont.setBold(true);
@@ -596,7 +627,8 @@ void SpreadSheet::setupContextMenu()
 
     table->setItem(9, 5, new SpreadSheetItem("sum F2 F9"));
     table->item(9,5)->setBackgroundColor(Qt::lightGray);
-}*/
+    */
+}
 
 const char *htmlText =
 "<HTML>"

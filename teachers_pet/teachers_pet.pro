@@ -35,5 +35,9 @@ SUBDIRS +=
 
 RESOURCES += spreadsheet.qrc
 
-DISTFILES += \
-    images/interview.png
+DISTFILES +=
+    #images/interview.png \
+    #images/add_course.png \
+    #images/remove_course.png \
+    #images/add_student.png \
+    #images/remove_student.png

@@ -82,11 +82,11 @@ public slots:
 
     void print();
 
-    void actionSum();
+    /*void actionSum();
     void actionSubtract();
     void actionAdd();
     void actionMultiply();
-    void actionDivide();
+    void actionDivide();*/
 
 protected:
     void setupContextMenu();
@@ -103,15 +103,16 @@ protected:
                         const QString &outText,
                         QString *cell1, QString *cell2, QString *outCell);
 private:
-    QToolBar *toolBar;
+    QToolBar *hToolBar;
+    QToolBar *vToolBar;
     QAction *colorAction;
     QAction *fontAction;
     QAction *firstSeparator;
-    QAction *cell_sumAction;
+    /*QAction *cell_sumAction;
     QAction *cell_addAction;
     QAction *cell_subAction;
     QAction *cell_mulAction;
-    QAction *cell_divAction;
+    QAction *cell_divAction;*/
     QAction *secondSeparator;
     QAction *clearAction;
     QAction *aboutSpreadSheet;

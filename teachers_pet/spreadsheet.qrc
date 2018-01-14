@@ -1,3 +1,9 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/">
+        <file>images/add_course.png</file>
+        <file>images/add_student.png</file>
+        <file>images/interview.png</file>
+        <file>images/remove_course.png</file>
+        <file>images/remove_student.png</file>
+    </qresource>
 </RCC>
